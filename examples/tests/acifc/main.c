@@ -61,6 +61,8 @@ int main(void) {
     printf("Analog Comparator driver does not exist\n");
     exit(1);
   }
+  printf("Analog Comparator driver exists with %d channels\n", ac_count());
+  
   // Set mode according to which implementation you want
   uint8_t mode = 2;
 
@@ -72,7 +74,16 @@ int main(void) {
 
   // Choose a window in case you want to do a comparison of three input values.
   // For the hail, there is only one window. For imix, there are two (0 and 1).
-  uint8_t window = 1;
+  uint8_t window = 0;
+
+  if (ac > ac_count() - 1) { 
+    printf("AC chosen is out of range for the current board!");
+    return -1;
+  }
+  else if (window > ((ac_count()/2) - 1)) {
+    printf("Window chosen is out of range for the current board!");
+    return -1;
+  }
 
   switch (mode) {
     // Poll for a normal comparison every second and print the result

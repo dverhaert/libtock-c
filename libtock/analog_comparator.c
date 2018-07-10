@@ -1,8 +1,13 @@
 #include "analog_comparator.h"
 #include "tock.h"
 
+// TODO Change into bool?
 int ac_exists(void) {
   return command(DRIVER_NUM_ACIFC, 0, 0, 0) >= 0;
+}
+
+int ac_count(void) {
+  return command(DRIVER_NUM_ACIFC, 0, 0, 0);
 }
 
 bool ac_comparison(uint8_t ac) {

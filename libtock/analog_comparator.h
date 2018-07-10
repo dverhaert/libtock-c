@@ -11,6 +11,9 @@ extern "C" {
 // Does the driver exist?
 int ac_exists(void);
 
+// Request the number of available ACs
+int ac_count(void);
+
 // Compare the voltages of two pins (if one is higher than the other) on the
 // corresponding AC, by polling every second.
 bool ac_comparison(uint8_t);
