@@ -18,10 +18,6 @@ int ac_count(void);
 // corresponding AC, by polling every second.
 bool ac_comparison(uint8_t);
 
-// Compare the voltages of three pins (if one is between the other two) on the
-// corresponding window, by polling every second.
-bool ac_window_comparison(uint8_t);
-
 // Enable interrupt-based comparisons
 int ac_enable_interrupts(uint8_t);
 

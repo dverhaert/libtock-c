@@ -21,21 +21,6 @@ static void ac_comparison_polling(uint8_t ac) {
   }
 }
 
-static void ac_window_comparison_polling(uint8_t window) {
-  uint count = 0;
-    while (1) {
-      count++;
-      bool result = ac_window_comparison(window);
-      printf("Try %d. Result = %d.\n", count, result);
-      if (result == 1) {
-        printf("This implies Vacbn_x+1 < Vcommon < Vacap_x!\n\n");
-      }else {
-        printf("This implies Vcommon < Vacan_x+1 or Vcommon > Vacap_x\n\n");
-      }
-      delay_ms(1000);
-  }
-}
-
 // Callback for AC interrupts. Channel on which the interrupt is generated is
 // passed through here.
 static void ac_cb (__attribute__ ((unused)) int arg0,
@@ -69,9 +54,8 @@ int main(void) {
   
   // Set mode according to which implementation you want.
   // mode = 0 --> polling comparison
-  // mode = 1 --> window comparison
-  // mode = 2 --> interrupt-based comparison
-  uint8_t mode = 2;
+  // mode = 1 --> interrupt-based comparison
+  uint8_t mode = 1;
 
   // Choose a comparator in case you want to do a comparison of two input
   // values. For the hail, there are two comparators. ac = 0 corresponds to
@@ -79,19 +63,12 @@ int main(void) {
   // these are the pins DAC and WKP, and A2 and A3 respectively.
   uint8_t ac = 1;
 
-  // Choose a window in case you want to do a comparison of three input values.
-  // For the hail, there is only one window. For imix, there are two (0 and 1).
-  uint8_t window = 0;
-
   switch (mode) {
     // Poll for a normal comparison every second and print the result
     case 0: ac_comparison_polling(ac); break;
 
-    // Poll for a window comparison every second and print the result
-    case 1: ac_window_comparison_polling(window); break;
-
     // Print for every interrupt received
-    case 2: ac_comparison_interrupt(ac); break;
+    case 1: ac_comparison_interrupt(ac); break;
 
   }
   printf("\n");
