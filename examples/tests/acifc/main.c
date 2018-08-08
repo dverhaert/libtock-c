@@ -4,6 +4,7 @@
 #include <analog_comparator.h>
 #include <timer.h>
 #include <tock.h>
+static int channel;
 
 static void ac_comparison_polling(uint8_t ac) {
   uint count = 0;
@@ -35,11 +36,14 @@ static void ac_window_comparison_polling(uint8_t window) {
   }
 }
 
-// Callback for AC interrupts. Currently empty, arguments could be sent.
+// Callback for AC interrupts. Channel on which the interrupt is generated is
+// passed through here.
 static void ac_cb (__attribute__ ((unused)) int arg0,
                    __attribute__ ((unused)) int arg1,
                    __attribute__ ((unused)) int arg2,
-                   __attribute__ ((unused)) void* userdata) {}
+                   __attribute__ ((unused)) void* userdata) {
+                     channel = arg0;
+                   }
 
 static void ac_comparison_interrupt(uint8_t ac) {
   // Enable AC interrupts
@@ -50,7 +54,7 @@ static void ac_comparison_interrupt(uint8_t ac) {
 
   while (1) {
     yield();
-    printf("ACIFC Interrupt received, Vinp > Vinn !\n");
+    printf("Interrupt received on channel %d, Vinp > Vinn !\n", channel);
   }
 }
 
