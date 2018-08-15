@@ -57,10 +57,7 @@ int main(void) {
   // mode = 1 --> interrupt-based comparison
   uint8_t mode = 1;
 
-  // Choose a comparator in case you want to do a comparison of two input
-  // values. For the hail, there are two comparators. ac = 0 corresponds to
-  // PA06 and PA07, whereas ac = 1 corresponds to PB02 and PB03.  On the hail
-  // these are the pins DAC and WKP, and A2 and A3 respectively.
+  // Choose a comparator, starting from index 0 and depending on the chip
   uint8_t ac = 1;
 
   switch (mode) {
